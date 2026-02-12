@@ -20,16 +20,27 @@
 
   function parseCurrentSiteChat() {
     const platform = detectPlatformByUrl(window.location);
+    let messages = [];
+
     switch (platform) {
       case 'gemini':
-        return normalizeResult(platform, window.GeminiParser.parseGeminiChat());
+        messages = window.GeminiParser.parseGeminiChat();
+        break;
       case 'grok':
-        return normalizeResult(platform, window.GrokParser.parseGrokChat());
+        messages = window.GrokParser.parseGrokChat();
+        break;
       case 'chatgpt':
-        return normalizeResult(platform, window.ChatGPTParser.parseChatGPTChat());
+        messages = window.ChatGPTParser.parseChatGPTChat();
+        break;
       default:
         throw new Error('Unsupported site. Supported: Gemini / Grok / ChatGPT.');
     }
+
+    if (!Array.isArray(messages) || messages.length === 0) {
+      throw new Error(`Parser matched 0 messages on ${platform}.`);
+    }
+
+    return normalizeResult(platform, messages);
   }
 
   window.__multiLLMExtractor = {
