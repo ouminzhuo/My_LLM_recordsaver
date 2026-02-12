@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Multi-LLM Chat Extractor",
+  "version": "0.1.0",
+  "description": "Extract Gemini, Grok, and ChatGPT chats into structured JSON.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "https://gemini.google.com/*",
+    "https://grok.com/*",
+    "https://x.com/i/grok*",
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Extract Chat"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
